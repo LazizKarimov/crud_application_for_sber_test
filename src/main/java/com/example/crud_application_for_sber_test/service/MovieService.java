@@ -6,6 +6,7 @@ import com.example.crud_application_for_sber_test.mapper.MovieMapper;
 import com.example.crud_application_for_sber_test.repository.MovieRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class MovieService {
         return movieMapper.convertToDTOList(movies);
     }
 
+    @Transactional
     public MovieDTO getById(Long id) {
         Movie movie = movieRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Movie with id " + id + " not found"));

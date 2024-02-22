@@ -1,10 +1,7 @@
 package com.example.crud_application_for_sber_test.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Data
@@ -24,4 +21,8 @@ public class Movie {
 
     @Column(name = "year")
     private Integer year;
+
+    @ManyToOne
+    @JoinColumn(name = "director_id", referencedColumnName = "id")
+    private Director movieDirector;
 }
