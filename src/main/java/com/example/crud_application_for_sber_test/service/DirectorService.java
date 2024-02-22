@@ -13,6 +13,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Service class for managing Director entities.
+ */
 @Service
 public class DirectorService {
     private static final Logger logger = LoggerFactory.getLogger(DirectorService.class);
@@ -24,6 +27,12 @@ public class DirectorService {
         this.directorRepository = directorRepository;
     }
 
+    /**
+     * Saves a DirectorDTO object as a Director entity.
+     *
+     * @param directorDTO The DirectorDTO object to save.
+     * @return The saved DirectorDTO object.
+     */
     @Transactional
     public DirectorDTO save(DirectorDTO directorDTO) {
         logger.info("Saving director: {}", directorDTO.getName());
@@ -32,6 +41,12 @@ public class DirectorService {
         return directorDTO;
     }
 
+    /**
+     * Updates a DirectorDTO object as a Director entity.
+     *
+     * @param directorDTO The DirectorDTO object to update.
+     * @return The updated DirectorDTO object.
+     */
     @Transactional
     public DirectorDTO update(DirectorDTO directorDTO) {
         logger.info("Updating director with id: {}", directorDTO.getId());
@@ -45,18 +60,34 @@ public class DirectorService {
         return directorMapper.convertToDTO(directorRepository.save(existingDirector));
     }
 
+    /**
+     * Deletes a Director entity by its ID.
+     *
+     * @param id The ID of the Director entity to delete.
+     */
     @Transactional
     public void delete(Long id) {
         logger.info("Deleting director with id: {}", id);
         directorRepository.deleteById(id);
     }
 
+    /**
+     * Retrieves a list of all DirectorDTO objects.
+     *
+     * @return The list of DirectorDTO objects.
+     */
     public List<DirectorDTO> getAll() {
         logger.info("Getting all directors");
         List<Director> directors = directorRepository.findAll();
         return directorMapper.convertToDTOList(directors);
     }
 
+    /**
+     * Retrieves a DirectorDTO object by its ID.
+     *
+     * @param id The ID of the Director entity to retrieve.
+     * @return The DirectorDTO object.
+     */
     @Transactional
     public DirectorDTO getById(Long id) {
         logger.info("Getting director with id: {}", id);

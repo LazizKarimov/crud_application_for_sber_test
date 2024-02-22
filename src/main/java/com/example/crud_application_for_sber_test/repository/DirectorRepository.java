@@ -4,6 +4,9 @@ import com.example.crud_application_for_sber_test.entity.Director;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Repository interface for Director entities.
+ */
 @Repository
 public interface DirectorRepository extends JpaRepository<Director, Long> {
 }
