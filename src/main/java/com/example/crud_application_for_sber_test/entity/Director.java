@@ -16,21 +16,26 @@ import lombok.NoArgsConstructor;
 @Table(name = "director")
 @Builder
 public class Director {
-
+    /**
+     * The unique identifier of the director.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id; // The unique identifier of the director.
-
+    private Long id;
+    /**
+     * The first name of the director.
+     */
     @Column(name = "name")
-    private String name; // The first name of the director.
-
+    private String name;
+    /**
+     * The last name of the director.
+     */
     @Column(name = "last_name")
-    private String lastName; // The last name of the director.
-
+    private String lastName;
+    /**
+     * The age of the director.
+     */
     @Column(name = "age")
-    private Integer age; // The age of the director.
-
-//    @OneToMany(mappedBy = "movieDirector")
-//    private List<Movie> listOfMovies;
+    private Integer age;
 }

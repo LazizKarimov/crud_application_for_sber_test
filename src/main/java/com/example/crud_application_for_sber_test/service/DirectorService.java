@@ -5,20 +5,18 @@ import com.example.crud_application_for_sber_test.entity.Director;
 import com.example.crud_application_for_sber_test.mapper.DirectorMapper;
 import com.example.crud_application_for_sber_test.repository.DirectorRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
- * Service class for managing Director entities.
+ * Service class for managing Director entity.
  */
 @Service
+@Slf4j
 public class DirectorService {
-    private static final Logger logger = LoggerFactory.getLogger(DirectorService.class);
     private final DirectorMapper directorMapper;
     private final DirectorRepository directorRepository;
 
@@ -35,7 +33,7 @@ public class DirectorService {
      */
     @Transactional
     public DirectorDTO save(DirectorDTO directorDTO) {
-        logger.info("Saving director: {}", directorDTO.getName());
+        log.info("Saving director: {}", directorDTO.getName());
         Director director = directorMapper.convertToEntity(directorDTO);
         directorDTO.setId(directorRepository.save(director).getId());
         return directorDTO;
@@ -49,7 +47,7 @@ public class DirectorService {
      */
     @Transactional
     public DirectorDTO update(DirectorDTO directorDTO) {
-        logger.info("Updating director with id: {}", directorDTO.getId());
+        log.info("Updating director with id: {}", directorDTO.getId());
         Director existingDirector = directorRepository.findById(directorDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Director with id " + directorDTO.getId() + " not found"));
 
@@ -67,7 +65,7 @@ public class DirectorService {
      */
     @Transactional
     public void delete(Long id) {
-        logger.info("Deleting director with id: {}", id);
+        log.info("Deleting director with id: {}", id);
         directorRepository.deleteById(id);
     }
 
@@ -76,8 +74,9 @@ public class DirectorService {
      *
      * @return The list of DirectorDTO objects.
      */
+    @Transactional
     public List<DirectorDTO> getAll() {
-        logger.info("Getting all directors");
+        log.info("Getting all directors");
         List<Director> directors = directorRepository.findAll();
         return directorMapper.convertToDTOList(directors);
     }
@@ -90,7 +89,7 @@ public class DirectorService {
      */
     @Transactional
     public DirectorDTO getById(Long id) {
-        logger.info("Getting director with id: {}", id);
+        log.info("Getting director with id: {}", id);
         return directorRepository.findById(id)
                 .map(directorMapper::convertToDTO)
                 .orElseThrow(() -> new EntityNotFoundException("Director with id " + id + " not found"));

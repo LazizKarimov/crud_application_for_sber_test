@@ -5,20 +5,18 @@ import com.example.crud_application_for_sber_test.entity.Movie;
 import com.example.crud_application_for_sber_test.mapper.MovieMapper;
 import com.example.crud_application_for_sber_test.repository.MovieRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Service class for managing Movie entities.
  */
 @Service
+@Slf4j
 public class MovieService {
-    private static final Logger logger = LoggerFactory.getLogger(MovieService.class);
     private final MovieMapper movieMapper;
     private final MovieRepository movieRepository;
 
@@ -35,7 +33,7 @@ public class MovieService {
      */
     @Transactional
     public MovieDTO save(MovieDTO movieDTO) {
-        logger.info("Saving movie: {}", movieDTO.getName());
+        log.info("Saving movie: {}", movieDTO.getName());
         Movie movie = movieMapper.convertToEntity(movieDTO);
         movieDTO.setId(movieRepository.save(movie).getId());
         return movieDTO;
@@ -49,7 +47,7 @@ public class MovieService {
      */
     @Transactional
     public MovieDTO update(MovieDTO movieDTO) {
-        logger.info("Updating movie with id: {}", movieDTO.getId());
+        log.info("Updating movie with id: {}", movieDTO.getId());
         Movie existingMovie = movieRepository.findById(movieDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Movie with id " + movieDTO.getId() + " not found"));
 
@@ -66,7 +64,7 @@ public class MovieService {
      */
     @Transactional
     public void delete(Long id) {
-        logger.info("Deleting movie with id: {}", id);
+        log.info("Deleting movie with id: {}", id);
         movieRepository.deleteById(id);
     }
 
@@ -75,8 +73,9 @@ public class MovieService {
      *
      * @return The list of MovieDTO objects.
      */
+    @Transactional
     public List<MovieDTO> getAll() {
-        logger.info("Getting all movies");
+        log.info("Getting all movies");
         List<Movie> movies = movieRepository.findAll();
         return movieMapper.convertToDTOList(movies);
     }
@@ -89,7 +88,7 @@ public class MovieService {
      */
     @Transactional
     public MovieDTO getById(Long id) {
-        logger.info("Getting movie with id: {}", id);
+        log.info("Getting movie with id: {}", id);
         Movie movie = movieRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Movie with id " + id + " not found"));
 

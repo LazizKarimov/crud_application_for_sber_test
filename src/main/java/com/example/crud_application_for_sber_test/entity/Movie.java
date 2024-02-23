@@ -13,19 +13,27 @@ import lombok.*;
 @Table(name = "movie")
 @Builder
 public class Movie {
-
+    /**
+     * The unique identifier of the movie.
+     */
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // The unique identifier of the movie.
-
+    private Long id;
+    /**
+     * The name of the movie.
+     */
     @Column(name = "name")
-    private String name; // The name of the movie.
-
-    @Column(name = "year")
-    private Integer year; // The release year of the movie.
-
+    private String name;
+    /**
+     * The release year of the movie.
+     */
+    @Column(name = "\"year\"")
+    private Integer year;
+    /**
+     * The director of the movie.
+     */
     @ManyToOne
     @JoinColumn(name = "director_id", referencedColumnName = "id")
-    private Director movieDirector; // The director of the movie.
+    private Director movieDirector;
 }
