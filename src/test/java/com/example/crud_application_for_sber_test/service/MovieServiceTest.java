@@ -14,6 +14,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for MovieServiceTest.
+ */
 @SpringBootTest
 class MovieServiceTest {
     @Autowired
@@ -29,8 +32,11 @@ class MovieServiceTest {
         directorRepository.deleteAll();
     }
 
+    /**
+     * Tests the save method of the MovieService class.
+     */
     @Test
-    void save() {
+    void save_movieDTO_savedSuccessfully() {
         // Arrange
         Director director = Director.builder()
                 .name("Tom")
@@ -53,8 +59,12 @@ class MovieServiceTest {
         assertEquals(movieDTO, savedMovieDTO);
     }
 
+    /**
+     * Tests the update method of the MovieService class.
+     */
     @Test
-    void update() {
+    void update_movieDTO_updatedSuccessfully() {
+        // Arrange
         Director director = Director.builder()
                 .name("Tom")
                 .lastName("Pak")
@@ -77,14 +87,20 @@ class MovieServiceTest {
                 .director(director)
                 .build();
 
+        // Act
         MovieDTO updatedMovieDTO = movieService.update(newMovieDTO);
 
+        // Assert
         assertEquals("changedName", updatedMovieDTO.getName());
         assertEquals(2000, updatedMovieDTO.getYear());
     }
 
+    /**
+     * Tests the delete method of the MovieService class.
+     */
     @Test
-    void delete() {
+    void delete_movie_deletedSuccessfully() {
+        // Arrange
         Director director = Director.builder()
                 .name("Tom")
                 .lastName("Pak")
@@ -100,13 +116,19 @@ class MovieServiceTest {
 
         movieService.save(movieDTO);
 
+        // Act
         movieService.delete(movieDTO.getId());
 
+        // Assert
         assertNull(movieRepository.findById(movieDTO.getId()).orElse(null));
     }
 
+    /**
+     * Tests the getAll method of the MovieService class.
+     */
     @Test
-    void getAll() {
+    void getAll_movies_returnedSuccessfully() {
+        // Arrange
         Director director1 = Director.builder()
                 .name("Tom")
                 .lastName("Pak")
@@ -135,15 +157,21 @@ class MovieServiceTest {
                 .build();
         movieService.save(movieDTO2);
 
+        // Act
         List<MovieDTO> movieDTOS = movieService.getAll();
 
+        // Assert
         assertEquals(2, movieDTOS.size());
         assertEquals("testName1", movieDTOS.get(0).getName());
         assertEquals("testName2", movieDTOS.get(1).getName());
     }
 
+    /**
+     * Tests the getById method of the MovieService class with an existing movie ID.
+     */
     @Test
-    void getById() {
+    void getById_existingMovieId_movieReturned() {
+        // Arrange
         Director director = Director.builder()
                 .name("Tom")
                 .lastName("Pak")
@@ -159,13 +187,18 @@ class MovieServiceTest {
 
         movieService.save(movieDTO);
 
+        // Act
         MovieDTO result = movieService.getById(director.getId());
 
+        // Assert
         assertNotNull(result);
         assertEquals("testName", result.getName());
         assertEquals(1990, result.getYear());
     }
 
+    /**
+     * Tests the getById method of the MovieService class with a non-existing movie ID.
+     */
     @Test
     void getById_nonExistingMovieId_entityNotFoundExceptionThrown() {
         // Arrange

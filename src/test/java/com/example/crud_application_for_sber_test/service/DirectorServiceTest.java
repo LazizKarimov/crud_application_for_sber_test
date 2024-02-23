@@ -14,6 +14,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+/**
+ * Test class for DirectorService.
+ */
 @SpringBootTest
 class DirectorServiceTest {
     @Autowired
@@ -21,11 +25,17 @@ class DirectorServiceTest {
     @Autowired
     private DirectorService directorService;
 
+    /**
+     * Clears the repository after each test.
+     */
     @AfterEach
     void clear() {
         directorRepository.deleteAll();
     }
 
+    /**
+     * Test for saving DirectorDTO.
+     */
     @Test
     void save_directorDTO_savedSuccessfully() {
         // Arrange
@@ -43,6 +53,9 @@ class DirectorServiceTest {
         assertEquals(directorDTO, savedDirectorDTO);
     }
 
+    /**
+     * Test for updating DirectorDTO.
+     */
     @Test
     void update_directorDTO_updatedSuccessfully() {
         // Arrange
@@ -69,6 +82,9 @@ class DirectorServiceTest {
         assertEquals(35, updatedDirectorDTO.getAge());
     }
 
+    /**
+     * Test for deleting DirectorDTO.
+     */
     @Test
     void delete_director_deletedSuccessfully() {
         // Arrange
@@ -87,6 +103,9 @@ class DirectorServiceTest {
         assertNull(directorRepository.findById(id).orElse(null));
     }
 
+    /**
+     * Test for getting all DirectorDTOs.
+     */
     @Test
     void getAll_directors_returnedSuccessfully() {
         // Arrange
@@ -106,6 +125,9 @@ class DirectorServiceTest {
         assertEquals("Jane", directorDTOs.get(1).getName());
     }
 
+    /**
+     * Test for getting DirectorDTO by ID.
+     */
     @Test
     void getById_existingDirectorId_directorReturned() {
         // Arrange
@@ -126,6 +148,9 @@ class DirectorServiceTest {
         assertEquals(30, directorDTO.getAge());
     }
 
+    /**
+     * Test for getting DirectorDTO by non-existing ID.
+     */
     @Test
     void getById_nonExistingDirectorId_entityNotFoundExceptionThrown() {
         // Arrange
